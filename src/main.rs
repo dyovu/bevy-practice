@@ -1,9 +1,41 @@
-use bevy::prelude::*;
+#[cfg(not(target_arch = "wasm32"))]
+use bevy::pbr::wireframe::{WireframeConfig, WireframePlugin};
+use bevy::{
+    asset::RenderAssetUsages,
+    color::palettes::basic::SILVER,
+    input::common_conditions::{input_just_pressed, input_toggle_active},
+    prelude::*,
+    render::render_resource::{Extent3d, TextureDimension, TextureFormat},
+};
 
+
+mod renderer_3d_tutorial;
+use renderer_3d_tutorial::{setup, rotate, advance_rows, toggle_wireframe};
+mod render_tetrahedron;
+use render_tetrahedron::{setup_tetra, rotate_tetra};
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
-        .add_plugins(HelloPlugin)
+        .add_plugins((
+            DefaultPlugins.set(ImagePlugin::default_nearest()),
+            #[cfg(not(target_arch = "wasm32"))]
+            WireframePlugin::default(),
+        ))
+        // .add_plugins(HelloPlugin)
+        .add_systems(Startup, setup_tetra)
+        .add_systems(Update, rotate_tetra)
+        // .add_systems(Startup, setup)
+        // .add_systems(
+        //     Update,
+        //     (
+        //         rotate.run_if(input_toggle_active(true, KeyCode::KeyR)),
+        //         advance_rows.run_if(input_just_pressed(KeyCode::Tab)),
+        //         
+        //     ),
+        // )
+        .add_systems(Update,
+            #[cfg(not(target_arch = "wasm32"))]
+            toggle_wireframe
+        )
         .run();
 }
 
@@ -18,8 +50,6 @@ impl Plugin for HelloPlugin {
         app.add_systems(Update, (update_people, greet_people).chain());
     }
 }
-
-
 
 // システム, ロジックの部分
 // 通常の関数. entityをどう動かすとか何表示するとかの設定
