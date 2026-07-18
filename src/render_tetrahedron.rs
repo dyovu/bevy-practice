@@ -10,7 +10,7 @@ pub struct Tetrahedron;
 
 pub fn setup_tetra(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
+    // asset_server: Res<AssetServer>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -24,6 +24,7 @@ pub fn setup_tetra(
         })),
         Tetrahedron,
     ));
+
     commands.spawn((
         PointLight {
             shadow_maps_enabled: true,
@@ -43,7 +44,7 @@ pub fn setup_tetra(
 
     commands.spawn((
         Camera3d::default(),
-        Transform::from_xyz(0.0, 7., 14.0).looking_at(Vec3::new(0., 1., 0.), Vec3::Y),
+        Transform::from_xyz(0.0,9., 10.0).looking_at(Vec3::new(0., 0., 0.), Vec3::Y),
     ));
 }
 
@@ -56,20 +57,20 @@ fn create_tetraheedron() -> Mesh{
     let positions: Vec<[f32; 3]> = vec![
         // 底面
         [0.0, 0.0, 2.0 * s3 / 3.0],
-        [1.0, 0.0, -s3 / 3.0],
         [-1.0, 0.0, -s3 / 3.0],
+        [1.0, 0.0, -s3 / 3.0],
         // 右面
         [0.0, 0.0, 2.0 * s3 / 3.0],
-        [0.0, 2.0 * s6 / 3.0, 0.0],
         [1.0, 0.0, -s3 / 3.0],
+        [0.0, 2.0 * s6 / 3.0, 0.0],
         // 左面
         [-1.0, 0.0, -s3 / 3.0],
-        [0.0, 2.0 * s6 / 3.0, 0.0],
         [0.0, 0.0, 2.0 * s3 / 3.0],
+        [0.0, 2.0 * s6 / 3.0, 0.0],
         // 背面
         [1.0, 0.0, -s3 / 3.0],
-        [0.0, 2.0 * s6 / 3.0, 0.0],
         [-1.0, 0.0, -s3 / 3.0],
+        [0.0, 2.0 * s6 / 3.0, 0.0],
     ];
 
     let face_colors = [
