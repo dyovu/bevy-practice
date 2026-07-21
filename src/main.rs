@@ -13,6 +13,10 @@ mod renderer_3d_tutorial;
 use renderer_3d_tutorial::{setup, rotate, advance_rows, toggle_wireframe};
 mod render_tetrahedron;
 use render_tetrahedron::{setup_tetra, rotate_tetra};
+mod fps_practice;
+use fps_practice::{spawn_player_view, mouse_look, move_body};
+mod first_point_shooter;
+
 fn main() {
     App::new()
         .add_plugins((
@@ -23,21 +27,15 @@ fn main() {
         // .add_plugins(HelloPlugin)
         .add_systems(Startup, setup_tetra)
         .add_systems(Update, rotate_tetra)
-        // .add_systems(Startup, setup)
-        // .add_systems(
-        //     Update,
-        //     (
-        //         rotate.run_if(input_toggle_active(true, KeyCode::KeyR)),
-        //         advance_rows.run_if(input_just_pressed(KeyCode::Tab)),
-        //         
-        //     ),
-        // )
+        .add_systems(Startup, spawn_player_view)
+        .add_systems(Update, (mouse_look, move_body))
         .add_systems(Update,
             #[cfg(not(target_arch = "wasm32"))]
             toggle_wireframe
         )
         .run();
 }
+
 
 // plugin
 // システムをまとめたもの

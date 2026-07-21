@@ -42,10 +42,10 @@ pub fn setup_tetra(
         MeshMaterial3d(materials.add(Color::from(Srgba::hex("B4E1EB").unwrap())))
     ));
 
-    commands.spawn((
-        Camera3d::default(),
-        Transform::from_xyz(0.0,9., 10.0).looking_at(Vec3::new(0., 0., 0.), Vec3::Y),
-    ));
+    // commands.spawn((
+    //     Camera3d::default(),
+    //     Transform::from_xyz(0.0,9., 10.0).looking_at(Vec3::new(0., 0., 0.), Vec3::Y),
+    // ));
 }
 
 
