@@ -100,4 +100,3 @@ pub fn move_body(
         transform.translation += right * move_velocity.vartical;
     }
 }
-
